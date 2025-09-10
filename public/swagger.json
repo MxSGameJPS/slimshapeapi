@@ -1,0 +1,450 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SlimShape API",
+    "version": "1.0.0",
+    "description": "Documentação da API SlimShape"
+  },
+  "paths": {
+    "/api/pacientes": {
+      "get": {
+        "summary": "Lista todos os pacientes",
+        "responses": {
+          "200": {
+            "description": "Lista de pacientes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Paciente" }
+                },
+                "examples": {
+                  "exemplo": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "nome": "Maria",
+                        "data_nascimento": "01/01/1990",
+                        "genero": "feminino",
+                        "cpf": "000.000.000-00",
+                        "telefone": "(11) 99999-9999",
+                        "email": "maria@email.com",
+                        "endereco": "Rua Exemplo, 123",
+                        "cidade": "São Paulo",
+                        "estado": "SP",
+                        "cep": "01234-567",
+                        "historico_pessoal_diabetes": false,
+                        "historico_pessoal_colesterol": true,
+                        "historico_pessoal_avc": false,
+                        "historico_pessoal_obesidade": false,
+                        "historico_pessoal_cancer": "",
+                        "historico_pessoal_alergias_graves": "Amendoim",
+                        "historico_pessoal_hipertensao": true,
+                        "historico_pessoal_doenca_cardiaca": false,
+                        "historico_pessoal_asma": false,
+                        "historico_pessoal_tireoide": false,
+                        "historico_pessoal_depressao": false,
+                        "historico_pessoal_outros": "",
+                        "historico_familiar_diabetes": true,
+                        "historico_familiar_colesterol": false,
+                        "historico_familiar_avc": false,
+                        "historico_familiar_cancer": "Pulmão",
+                        "historico_familiar_hipertensao": true,
+                        "historico_familiar_doenca_cardiaca": false,
+                        "historico_familiar_obesidade": false,
+                        "historico_familiar_morte_subita": false,
+                        "historico_familiar_outros": "",
+                        "medicamentos_atuais": "Losartana 50mg",
+                        "suplementos_atuais": "Vitamina D",
+                        "alergias": "Amendoim",
+                        "fuma": "Não",
+                        "bebe_alcool": "Socialmente",
+                        "motivo_consulta": "Emagrecimento",
+                        "descricao_sintomas": "Cansaço frequente",
+                        "tempo_sintomas": "meses",
+                        "peso_atual": 70,
+                        "altura_cm": 170,
+                        "historico_peso": "Oscilações nos últimos anos",
+                        "habitos_alimentares": "3 refeições/dia, pouca fritura",
+                        "atividade_fisica": "Caminhada 2x/semana",
+                        "frequencia_atividade": "leve",
+                        "exames_recentes": "Hemograma normal",
+                        "exames_arquivos": [
+                          "https://cloudinary.com/exame1.pdf"
+                        ],
+                        "diagnosticos_anteriores": "Hipertensão",
+                        "diagnosticos_arquivos": [
+                          "https://cloudinary.com/diag1.pdf"
+                        ],
+                        "consentimento_telemedicina": true,
+                        "consentimento_lgpd": true,
+                        "termos_uso": true,
+                        "criado_em": "2025-09-10T12:00:00Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo paciente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Paciente" },
+              "examples": {
+                "exemplo": {
+                  "value": {
+                    "nome": "Maria",
+                    "data_nascimento": "01/01/1990",
+                    "genero": "feminino",
+                    "cpf": "000.000.000-00",
+                    "telefone": "(11) 99999-9999",
+                    "email": "maria@email.com",
+                    "endereco": "Rua Exemplo, 123",
+                    "cidade": "São Paulo",
+                    "estado": "SP",
+                    "cep": "01234-567",
+                    "historico_pessoal_diabetes": false,
+                    "historico_pessoal_colesterol": true,
+                    "historico_pessoal_avc": false,
+                    "historico_pessoal_obesidade": false,
+                    "historico_pessoal_cancer": "",
+                    "historico_pessoal_alergias_graves": "Amendoim",
+                    "historico_pessoal_hipertensao": true,
+                    "historico_pessoal_doenca_cardiaca": false,
+                    "historico_pessoal_asma": false,
+                    "historico_pessoal_tireoide": false,
+                    "historico_pessoal_depressao": false,
+                    "historico_pessoal_outros": "",
+                    "historico_familiar_diabetes": true,
+                    "historico_familiar_colesterol": false,
+                    "historico_familiar_avc": false,
+                    "historico_familiar_cancer": "Pulmão",
+                    "historico_familiar_hipertensao": true,
+                    "historico_familiar_doenca_cardiaca": false,
+                    "historico_familiar_obesidade": false,
+                    "historico_familiar_morte_subita": false,
+                    "historico_familiar_outros": "",
+                    "medicamentos_atuais": "Losartana 50mg",
+                    "suplementos_atuais": "Vitamina D",
+                    "alergias": "Amendoim",
+                    "fuma": "Não",
+                    "bebe_alcool": "Socialmente",
+                    "motivo_consulta": "Emagrecimento",
+                    "descricao_sintomas": "Cansaço frequente",
+                    "tempo_sintomas": "meses",
+                    "peso_atual": 70,
+                    "altura_cm": 170,
+                    "historico_peso": "Oscilações nos últimos anos",
+                    "habitos_alimentares": "3 refeições/dia, pouca fritura",
+                    "atividade_fisica": "Caminhada 2x/semana",
+                    "frequencia_atividade": "leve",
+                    "exames_recentes": "Hemograma normal",
+                    "exames_arquivos": ["https://cloudinary.com/exame1.pdf"],
+                    "diagnosticos_anteriores": "Hipertensão",
+                    "diagnosticos_arquivos": [
+                      "https://cloudinary.com/diag1.pdf"
+                    ],
+                    "consentimento_telemedicina": true,
+                    "consentimento_lgpd": true,
+                    "termos_uso": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Paciente criado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Paciente" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um paciente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Paciente" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Paciente atualizado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Paciente" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove um paciente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "id": { "type": "integer" } }
+              },
+              "examples": { "exemplo": { "value": { "id": 1 } } }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Paciente removido" }
+        }
+      }
+    },
+    "/api/medicos": {
+      "get": {
+        "summary": "Lista todos os médicos",
+        "responses": {
+          "200": {
+            "description": "Lista de médicos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Medico" }
+                },
+                "examples": {
+                  "exemplo": {
+                    "value": [{ "id": 1, "nome": "Dr. João", "crm": "123456" }]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo médico",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Medico" },
+              "examples": {
+                "exemplo": {
+                  "value": { "nome": "Dr. João", "crm": "123456" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Médico criado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Medico" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um médico",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Medico" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Médico atualizado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Medico" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove um médico",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "id": { "type": "integer" } }
+              },
+              "examples": { "exemplo": { "value": { "id": 1 } } }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Médico removido" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Paciente": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "nome": { "type": "string", "example": "Maria" },
+          "data_nascimento": { "type": "string", "example": "01/01/1990" },
+          "genero": { "type": "string", "example": "feminino" },
+          "cpf": { "type": "string", "example": "000.000.000-00" },
+          "telefone": { "type": "string", "example": "(11) 99999-9999" },
+          "email": { "type": "string", "example": "maria@email.com" },
+          "endereco": { "type": "string", "example": "Rua Exemplo, 123" },
+          "cidade": { "type": "string", "example": "São Paulo" },
+          "estado": { "type": "string", "example": "SP" },
+          "cep": { "type": "string", "example": "01234-567" },
+
+          "historico_pessoal_diabetes": { "type": "boolean", "example": false },
+          "historico_pessoal_colesterol": {
+            "type": "boolean",
+            "example": true
+          },
+          "historico_pessoal_avc": { "type": "boolean", "example": false },
+          "historico_pessoal_obesidade": {
+            "type": "boolean",
+            "example": false
+          },
+          "historico_pessoal_cancer": { "type": "string", "example": "" },
+          "historico_pessoal_alergias_graves": {
+            "type": "string",
+            "example": "Amendoim"
+          },
+          "historico_pessoal_hipertensao": {
+            "type": "boolean",
+            "example": true
+          },
+          "historico_pessoal_doenca_cardiaca": {
+            "type": "boolean",
+            "example": false
+          },
+          "historico_pessoal_asma": { "type": "boolean", "example": false },
+          "historico_pessoal_tireoide": { "type": "boolean", "example": false },
+          "historico_pessoal_depressao": {
+            "type": "boolean",
+            "example": false
+          },
+          "historico_pessoal_outros": { "type": "string", "example": "" },
+
+          "historico_familiar_diabetes": { "type": "boolean", "example": true },
+          "historico_familiar_colesterol": {
+            "type": "boolean",
+            "example": false
+          },
+          "historico_familiar_avc": { "type": "boolean", "example": false },
+          "historico_familiar_cancer": {
+            "type": "string",
+            "example": "Pulmão"
+          },
+          "historico_familiar_hipertensao": {
+            "type": "boolean",
+            "example": true
+          },
+          "historico_familiar_doenca_cardiaca": {
+            "type": "boolean",
+            "example": false
+          },
+          "historico_familiar_obesidade": {
+            "type": "boolean",
+            "example": false
+          },
+          "historico_familiar_morte_subita": {
+            "type": "boolean",
+            "example": false
+          },
+          "historico_familiar_outros": { "type": "string", "example": "" },
+
+          "medicamentos_atuais": {
+            "type": "string",
+            "example": "Losartana 50mg"
+          },
+          "suplementos_atuais": { "type": "string", "example": "Vitamina D" },
+          "alergias": { "type": "string", "example": "Amendoim" },
+          "fuma": { "type": "string", "example": "Não" },
+          "bebe_alcool": { "type": "string", "example": "Socialmente" },
+
+          "motivo_consulta": { "type": "string", "example": "Emagrecimento" },
+          "descricao_sintomas": {
+            "type": "string",
+            "example": "Cansaço frequente"
+          },
+          "tempo_sintomas": { "type": "string", "example": "meses" },
+
+          "peso_atual": { "type": "number", "example": 70 },
+          "altura_cm": { "type": "number", "example": 170 },
+          "historico_peso": {
+            "type": "string",
+            "example": "Oscilações nos últimos anos"
+          },
+          "habitos_alimentares": {
+            "type": "string",
+            "example": "3 refeições/dia, pouca fritura"
+          },
+          "atividade_fisica": {
+            "type": "string",
+            "example": "Caminhada 2x/semana"
+          },
+          "frequencia_atividade": { "type": "string", "example": "leve" },
+
+          "exames_recentes": {
+            "type": "string",
+            "example": "Hemograma normal"
+          },
+          "exames_arquivos": {
+            "type": "array",
+            "items": { "type": "string" },
+            "example": ["https://cloudinary.com/exame1.pdf"]
+          },
+          "diagnosticos_anteriores": {
+            "type": "string",
+            "example": "Hipertensão"
+          },
+          "diagnosticos_arquivos": {
+            "type": "array",
+            "items": { "type": "string" },
+            "example": ["https://cloudinary.com/diag1.pdf"]
+          },
+
+          "consentimento_telemedicina": { "type": "boolean", "example": true },
+          "consentimento_lgpd": { "type": "boolean", "example": true },
+          "termos_uso": { "type": "boolean", "example": true },
+
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-10T12:00:00Z"
+          }
+        }
+      },
+      "Medico": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "nome": { "type": "string", "example": "Dr. João" },
+          "crm": { "type": "string", "example": "123456" }
+        }
+      }
+    }
+  }
+}
