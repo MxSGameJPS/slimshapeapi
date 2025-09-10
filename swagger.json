@@ -1,0 +1,170 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Slim Shape Digital API",
+    "version": "1.0.0",
+    "description": "API para pré-cadastro, administração e análises do Slim Shape Digital."
+  },
+  "servers": [{ "url": "/api" }],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [{ "bearerAuth": [] }],
+  "paths": {
+    "/pre-cadastro": {
+      "post": {
+        "summary": "Pré-cadastro de paciente",
+        "description": "Recebe todos os dados do formulário e URLs dos arquivos do Cloudinary.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Paciente" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Paciente cadastrado" },
+          "400": { "description": "Campos obrigatórios ausentes" },
+          "500": { "description": "Erro ao cadastrar paciente" }
+        }
+      }
+    },
+    "/admin/login": {
+      "post": {
+        "summary": "Login do administrador",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Token JWT" },
+          "401": { "description": "Credenciais inválidas" }
+        }
+      }
+    },
+    "/pacientes": {
+      "get": {
+        "summary": "Listar pacientes",
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } },
+          { "name": "search", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Lista de pacientes" },
+          "401": { "description": "Token inválido" }
+        },
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/injecoes": {
+      "get": {
+        "summary": "Listar vendas de injeções",
+        "responses": {
+          "200": { "description": "Lista de vendas" },
+          "401": { "description": "Token inválido" }
+        },
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/planos": {
+      "get": {
+        "summary": "Listar planos ativos",
+        "responses": {
+          "200": { "description": "Lista de planos" },
+          "401": { "description": "Token inválido" }
+        },
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/analises": {
+      "get": {
+        "summary": "Dados para análises/gráficos",
+        "responses": {
+          "200": { "description": "Dados agregados" },
+          "401": { "description": "Token inválido" }
+        },
+        "security": [{ "bearerAuth": [] }]
+      }
+    }
+  },
+  "schemas": {
+    "Paciente": {
+      "type": "object",
+      "properties": {
+        "nome": { "type": "string" },
+        "dataNascimento": { "type": "string" },
+        "genero": { "type": "string" },
+        "cpf": { "type": "string" },
+        "telefone": { "type": "string" },
+        "email": { "type": "string" },
+        "endereco": { "type": "string" },
+        "cidade": { "type": "string" },
+        "estado": { "type": "string" },
+        "cep": { "type": "string" },
+        "plano": { "type": "string" },
+        "combinacao": { "type": "string" },
+        "historicoMedicoPessoal": { "type": "string" },
+        "historicoMedicoFamiliar": { "type": "string" },
+        "medicamentos": { "type": "string" },
+        "suplementos": { "type": "string" },
+        "alergias": { "type": "string" },
+        "fuma": { "type": "string" },
+        "bebe": { "type": "string" },
+        "motivoConsulta": { "type": "string" },
+        "sintomas": { "type": "string" },
+        "tempoSintomas": { "type": "string" },
+        "peso": { "type": "number" },
+        "altura": { "type": "number" },
+        "historicoPeso": { "type": "string" },
+        "habitosAlimentares": { "type": "string" },
+        "atividadeFisica": { "type": "string" },
+        "freqAtividadeFisica": { "type": "string" },
+        "examesRecentes": { "type": "string" },
+        "examesArquivosUrl": { "type": "array", "items": { "type": "string" } },
+        "diagnosticosAnteriores": { "type": "string" },
+        "diagnosticosArquivosUrl": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "consentimentoTelemedicina": { "type": "boolean" },
+        "consentimentoLGPD": { "type": "boolean" },
+        "consentimentoTermos": { "type": "boolean" }
+      },
+      "required": [
+        "nome",
+        "dataNascimento",
+        "genero",
+        "cpf",
+        "telefone",
+        "email",
+        "endereco",
+        "cidade",
+        "estado",
+        "cep",
+        "plano",
+        "consentimentoTelemedicina",
+        "consentimentoLGPD",
+        "consentimentoTermos"
+      ]
+    }
+  }
+}

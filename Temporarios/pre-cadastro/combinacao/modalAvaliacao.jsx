@@ -617,14 +617,49 @@ function ModalAvaliacao({ open, onClose }) {
             {step === 6 && (
               <form
                 className={styles.form}
-                onSubmit={(e) => {
-                  e.preventDefault(); /* aqui você pode enviar os dados finais */
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  // Coletar todos os dados dos steps anteriores (exemplo simplificado)
+                  const formData = new FormData();
+                  // Adicione aqui todos os campos dos steps anteriores, ex:
+                  // formData.append('nome', nome);
+                  // formData.append('dataNascimento', dataNascimento);
+                  // ...
+                  examesFiles.forEach((file) =>
+                    formData.append("examesArquivos", file)
+                  );
+                  diagFiles.forEach((file) =>
+                    formData.append("diagnosticosArquivos", file)
+                  );
+                  // Adicione os campos dos termos
+                  // formData.append('consentimentoTelemedicina', 'true');
+                  // formData.append('consentimentoLGPD', 'true');
+                  // formData.append('termosUso', 'true');
+                  try {
+                    const response = await fetch("/api/pre-cadastro", {
+                      method: "POST",
+                      body: formData,
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                      alert("Avaliação enviada com sucesso!");
+                      if (onClose) onClose();
+                    } else {
+                      alert(data.error || "Erro ao enviar avaliação.");
+                    }
+                  } catch (err) {
+                    alert("Erro de conexão com o servidor.");
+                  }
                 }}
               >
                 <div className={styles.cardDesc}>{stepSubtitles[5]}</div>
                 <div className={styles.termosCard}>
                   <label className={styles.termoLabel}>
-                    <input type="checkbox" required />
+                    <input
+                      type="checkbox"
+                      required
+                      name="consentimentoTelemedicina"
+                    />
                     <div>
                       Consentimento para Telemedicina *<br />
                       <span>
@@ -637,7 +672,7 @@ function ModalAvaliacao({ open, onClose }) {
                     </div>
                   </label>
                   <label className={styles.termoLabel}>
-                    <input type="checkbox" required />
+                    <input type="checkbox" required name="consentimentoLGPD" />
                     <div>
                       Consentimento para Tratamento de Dados (LGPD) *<br />
                       <span>
@@ -650,7 +685,7 @@ function ModalAvaliacao({ open, onClose }) {
                     </div>
                   </label>
                   <label className={styles.termoLabel}>
-                    <input type="checkbox" required />
+                    <input type="checkbox" required name="termosUso" />
                     <div>
                       Termos de Uso da Plataforma *<br />
                       <span>
