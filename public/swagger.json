@@ -297,6 +297,69 @@
           "204": { "description": "Médico removido" }
         }
       }
+    },
+    "/api/admin": {
+      "post": {
+        "summary": "Login de administrador",
+        "description": "Realiza o login do administrador e retorna um token de autenticação.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "usuario": { "type": "string", "example": "admin" },
+                  "senha": { "type": "string", "example": "123456" }
+                },
+                "required": ["usuario", "senha"]
+              },
+              "examples": {
+                "exemplo": {
+                  "value": {
+                    "usuario": "admin",
+                    "senha": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "admin": { "$ref": "#/components/schemas/Admin" }
+                  }
+                },
+                "examples": {
+                  "exemplo": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                      "admin": {
+                        "id": 1,
+                        "usuario": "admin",
+                        "nome": "Administrador"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Credenciais inválidas"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -443,6 +506,14 @@
           "id": { "type": "integer", "example": 1 },
           "nome": { "type": "string", "example": "Dr. João" },
           "crm": { "type": "string", "example": "123456" }
+        }
+      },
+      "Admin": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "usuario": { "type": "string", "example": "admin" },
+          "nome": { "type": "string", "example": "Administrador" }
         }
       }
     }
