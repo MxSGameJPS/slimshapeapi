@@ -1,0 +1,68 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SlimShape API",
+    "version": "1.0.0",
+    "description": "Documentação da API SlimShape"
+  },
+  "paths": {
+    "/api/pacientes": {
+      "get": {
+        "summary": "Lista todos os pacientes",
+        "responses": {
+          "200": { "description": "Lista de pacientes" }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo paciente",
+        "requestBody": { "required": true },
+        "responses": {
+          "201": { "description": "Paciente criado" }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um paciente",
+        "requestBody": { "required": true },
+        "responses": {
+          "200": { "description": "Paciente atualizado" }
+        }
+      },
+      "delete": {
+        "summary": "Remove um paciente",
+        "requestBody": { "required": true },
+        "responses": {
+          "204": { "description": "Paciente removido" }
+        }
+      }
+    },
+    "/api/medicos": {
+      "get": {
+        "summary": "Lista todos os médicos",
+        "responses": {
+          "200": { "description": "Lista de médicos" }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo médico",
+        "requestBody": { "required": true },
+        "responses": {
+          "201": { "description": "Médico criado" }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um médico",
+        "requestBody": { "required": true },
+        "responses": {
+          "200": { "description": "Médico atualizado" }
+        }
+      },
+      "delete": {
+        "summary": "Remove um médico",
+        "requestBody": { "required": true },
+        "responses": {
+          "204": { "description": "Médico removido" }
+        }
+      }
+    }
+  }
+}
