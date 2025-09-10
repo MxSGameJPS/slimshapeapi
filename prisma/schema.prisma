@@ -1,0 +1,59 @@
+// Configuração do schema do Prisma para Slim Shape Digital
+// Ajuste os modelos conforme a necessidade do frontend
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Paciente {
+  id                Int      @id @default(autoincrement())
+  nome              String
+  dataNascimento    String
+  genero            String
+  cpf               String
+  telefone          String
+  email             String
+  endereco          String
+  cidade            String
+  estado            String
+  cep               String
+  plano             String
+  combinacao        String?
+  historicoMedicoPessoal   String?
+  historicoMedicoFamiliar  String?
+  medicamentos      String?
+  suplementos       String?
+  alergias          String?
+  fuma              String?
+  bebe              String?
+  motivoConsulta    String?
+  sintomas          String?
+  tempoSintomas     String?
+  peso              Float?
+  altura            Float?
+  historicoPeso     String?
+  habitosAlimentares String?
+  atividadeFisica   String?
+  freqAtividadeFisica String?
+  examesRecentes    String?
+  examesArquivosUrl String[]
+  diagnosticosAnteriores String?
+  diagnosticosArquivosUrl String[]
+  consentimentoTelemedicina Boolean
+  consentimentoLGPD        Boolean
+  consentimentoTermos      Boolean
+  createdAt         DateTime @default(now())
+}
+
