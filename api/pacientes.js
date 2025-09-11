@@ -41,6 +41,10 @@ module.exports = async function handler(req, res) {
   }
   if (req.method === "POST") {
     const dados = req.body;
+    console.log(
+      "[DEBUG] Dados recebidos no POST /api/pacientes:",
+      JSON.stringify(dados)
+    );
     // Adapte os campos conforme o modelo da tabela pacientes
     try {
       const campos = Object.keys(dados);
@@ -49,10 +53,15 @@ module.exports = async function handler(req, res) {
       const query = `INSERT INTO pacientes (${campos.join(
         ", "
       )}) VALUES (${params}) RETURNING *`;
+      console.log("[DEBUG] Query gerada:", query);
+      console.log("[DEBUG] Valores:", valores);
       const result = await pool.query(query, valores);
       return res.status(201).json(result.rows[0]);
     } catch (e) {
-      return res.status(500).json({ error: "Erro ao criar paciente" });
+      console.error("[ERRO] Falha ao criar paciente:", e);
+      return res
+        .status(500)
+        .json({ error: "Erro ao criar paciente", detalhe: e.message });
     }
   }
   if (req.method === "PUT") {
