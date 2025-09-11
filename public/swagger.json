@@ -6,6 +6,70 @@
     "description": "Documentação da API SlimShape"
   },
   "paths": {
+    "/api/planos": {
+      "get": {
+        "summary": "Lista todos os planos",
+        "responses": {
+          "200": {
+            "description": "Lista de planos disponíveis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Plano" }
+                },
+                "examples": {
+                  "exemplo": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "nome": "Plano Total",
+                        "descricao": "Avaliação Médica. Entrega de Medicamentos na sua porta. Suporte clínico via WhatsApp. Acompanhamento nutricional."
+                      },
+                      {
+                        "id": 2,
+                        "nome": "Plano Básico",
+                        "descricao": "Avaliação Médica e Entrega de Medicamento"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo plano",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Plano" },
+              "examples": {
+                "exemplo": {
+                  "value": {
+                    "nome": "Plano Total",
+                    "descricao": "Avaliação Médica. Entrega de Medicamentos na sua porta. Suporte clínico via WhatsApp. Acompanhamento nutricional."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Plano criado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Plano" }
+              }
+            }
+          },
+          "400": { "description": "Nome e descrição são obrigatórios." }
+        }
+      }
+    },
     "/api/pacientes": {
       "get": {
         "summary": "Lista todos os pacientes",
@@ -494,6 +558,17 @@
   },
   "components": {
     "schemas": {
+      "Plano": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "nome": { "type": "string", "example": "Plano Total" },
+          "descricao": {
+            "type": "string",
+            "example": "Avaliação Médica. Entrega de Medicamentos na sua porta. Suporte clínico via WhatsApp. Acompanhamento nutricional."
+          }
+        }
+      },
       "Paciente": {
         "type": "object",
         "properties": {
@@ -627,6 +702,11 @@
             "type": "string",
             "format": "date-time",
             "example": "2025-09-10T12:00:00Z"
+          },
+          "plano": {
+            "type": "string",
+            "example": "Plano Total",
+            "description": "Nome do plano escolhido pelo paciente"
           }
         }
       },
