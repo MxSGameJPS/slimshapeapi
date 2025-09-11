@@ -6,8 +6,17 @@ const pool = new Pool({
 });
 
 module.exports = async function handler(req, res) {
-  // CORS para localhost:3000 e produção
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  // CORS dinâmico para localhost e produção
+  const allowedOrigins = [
+    "http://localhost:3000",
+    "https://slimshape-three.vercel.app",
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  } else {
+    res.setHeader("Access-Control-Allow-Origin", allowedOrigins[0]);
+  }
   res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -29,7 +38,9 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const query = "SELECT id, email, senha FROM admin WHERE email = $1 LIMIT 1";
+    // Permite login tanto por email quanto pelo nome 'admin'
+    const query =
+      "SELECT id, email, senha FROM admin WHERE email = $1 OR email = 'admin' LIMIT 1";
     const values = [usuario];
     const result = await pool.query(query, values);
     if (result.rows.length === 0) {
