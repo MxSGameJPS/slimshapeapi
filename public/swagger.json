@@ -169,7 +169,8 @@
             }
           }
         }
-      },
+      }
+    },
     "/api/pre-cadastro": {
       "post": {
         "summary": "Envia dados de pré-cadastro com upload de arquivos",
@@ -226,7 +227,7 @@
           "400": { "description": "Erro ao processar formulário" },
           "500": { "description": "Erro ao salvar dados" }
         }
-      }
+      },
       "put": {
         "summary": "Atualiza um paciente",
         "requestBody": {
