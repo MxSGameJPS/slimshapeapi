@@ -41,6 +41,11 @@ module.exports = async function handler(req, res) {
   }
   if (req.method === "POST") {
     const dados = req.body;
+    // Converte strings vazias para null nos campos sensíveis
+    if (dados.data_nascimento === "") dados.data_nascimento = null;
+    if (dados.peso_atual === "") dados.peso_atual = null;
+    if (dados.altura === "") dados.altura = null;
+    // Adapte para outros campos se necessário
     console.log(
       "[DEBUG] Dados recebidos no POST /api/pacientes:",
       JSON.stringify(dados)
