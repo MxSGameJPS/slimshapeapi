@@ -15,14 +15,8 @@ app.use("/swagger.css", express.static(path.join(__dirname, "swagger.css")));
 app.use("/swagger.html", express.static(path.join(__dirname, "swagger.html")));
 app.use("/swagger.json", express.static(path.join(__dirname, "swagger.json")));
 
-// Endpoints da API
-app.use("/api/pacientes", (req, res) => {
-  require("./api/pacientes")(req, res);
-});
-app.use("/api/medicos", (req, res) => {
-  require("./api/medicos")(req, res);
-});
-app.use("/api/pre-cadastro", require("./api/pre-cadastro"));
+
+// As rotas da API são servidas diretamente pelos arquivos em /api no padrão Vercel serverless
 
 // Página inicial
 app.get("/", (req, res) => {
