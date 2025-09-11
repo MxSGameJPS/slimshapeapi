@@ -170,6 +170,63 @@
           }
         }
       },
+    "/api/pre-cadastro": {
+      "post": {
+        "summary": "Envia dados de pré-cadastro com upload de arquivos",
+        "description": "Recebe arquivos (exames e diagnósticos) e retorna as URLs dos arquivos enviados para o Cloudinary.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "examesArquivos": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" },
+                    "description": "Arquivos de exames (PDF, imagem, etc)"
+                  },
+                  "diagnosticosArquivos": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" },
+                    "description": "Arquivos de diagnósticos (PDF, imagem, etc)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URLs dos arquivos enviados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "examesUrls": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "example": ["https://cloudinary.com/exame1.pdf"]
+                    },
+                    "diagUrls": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "example": ["https://cloudinary.com/diag1.pdf"]
+                    }
+                  }
+                },
+                "example": {
+                  "examesUrls": ["https://cloudinary.com/exame1.pdf"],
+                  "diagUrls": ["https://cloudinary.com/diag1.pdf"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Erro ao processar formulário" },
+          "500": { "description": "Erro ao salvar dados" }
+        }
+      }
       "put": {
         "summary": "Atualiza um paciente",
         "requestBody": {
