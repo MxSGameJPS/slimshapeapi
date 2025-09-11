@@ -1,12 +1,13 @@
-// Endpoint Express para receber o pré-cadastro do frontend
-const express = require("express");
-const router = express.Router();
+// Endpoint compatível com Vercel serverless para receber o pré-cadastro do frontend
 const formidable = require("formidable");
 const { uploadToCloudinary } = require("../cloudinary");
 const { savePreCadastro } = require("../db");
 
-// Desabilita o bodyParser para este endpoint (importante para multipart/form-data)
-router.post("/", (req, res) => {
+module.exports = async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Método não permitido" });
+  }
+
   const form = new formidable.IncomingForm();
   form.multiples = true;
 
@@ -36,11 +37,9 @@ router.post("/", (req, res) => {
       }
       // Salvar no banco
       await savePreCadastro(fields, examesUrls, diagUrls);
-      return res.status(200).json({ success: true });
+      return res.status(200).json({ examesUrls, diagUrls });
     } catch (e) {
       return res.status(500).json({ error: "Erro ao salvar dados" });
     }
   });
-});
-
-module.exports = router;
+};
