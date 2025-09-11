@@ -15,7 +15,6 @@ app.use("/swagger.css", express.static(path.join(__dirname, "swagger.css")));
 app.use("/swagger.html", express.static(path.join(__dirname, "swagger.html")));
 app.use("/swagger.json", express.static(path.join(__dirname, "swagger.json")));
 
-
 // As rotas da API são servidas diretamente pelos arquivos em /api no padrão Vercel serverless
 
 // Página inicial
