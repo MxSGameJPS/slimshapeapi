@@ -4,6 +4,24 @@ const { uploadToCloudinary } = require("../cloudinary");
 const { savePreCadastro } = require("../db");
 
 module.exports = async function handler(req, res) {
+  // CORS dinâmico para localhost e produção
+  const allowedOrigins = [
+    "http://localhost:3000",
+    "https://slimshape-three.vercel.app",
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  } else {
+    res.setHeader("Access-Control-Allow-Origin", allowedOrigins[0]);
+  }
+  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  if (req.method === "OPTIONS") {
+    return res.status(204).end();
+  }
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método não permitido" });
   }

@@ -9,6 +9,24 @@ const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 // DELETE /api/medicos/:id - Remove um médico
 
 module.exports = async function handler(req, res) {
+  // CORS dinâmico para localhost e produção
+  const allowedOrigins = [
+    "http://localhost:3000",
+    "https://slimshape-three.vercel.app",
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  } else {
+    res.setHeader("Access-Control-Allow-Origin", allowedOrigins[0]);
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  if (req.method === "OPTIONS") {
+    return res.status(204).end();
+  }
   if (req.method === "GET") {
     try {
       const result = await pool.query("SELECT * FROM medicos ORDER BY id");
