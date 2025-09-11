@@ -22,9 +22,7 @@ app.use("/api/pacientes", (req, res) => {
 app.use("/api/medicos", (req, res) => {
   require("./api/medicos")(req, res);
 });
-app.use("/api/pre-cadastro", (req, res) => {
-  require("./api/pre-cadastro")(req, res);
-});
+app.use("/api/pre-cadastro", require("./api/pre-cadastro"));
 
 // Página inicial
 app.get("/", (req, res) => {

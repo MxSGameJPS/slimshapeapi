@@ -1,19 +1,12 @@
-// Endpoint para receber o pré-cadastro do frontend
+// Endpoint Express para receber o pré-cadastro do frontend
+const express = require("express");
+const router = express.Router();
 const formidable = require("formidable");
 const { uploadToCloudinary } = require("../cloudinary");
 const { savePreCadastro } = require("../db");
 
-exports.config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-module.exports = async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método não permitido" });
-  }
-
+// Desabilita o bodyParser para este endpoint (importante para multipart/form-data)
+router.post("/", (req, res) => {
   const form = new formidable.IncomingForm();
   form.multiples = true;
 
@@ -48,4 +41,6 @@ module.exports = async function handler(req, res) {
       return res.status(500).json({ error: "Erro ao salvar dados" });
     }
   });
-};
+});
+
+module.exports = router;

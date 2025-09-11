@@ -7,6 +7,56 @@
   },
   "paths": {
     "/api/pacientes": {
+      "/api/pre-cadastro": {
+        "post": {
+          "summary": "Envia dados de pré-cadastro com upload de arquivos",
+          "description": "Recebe dados do pré-cadastro e faz upload de exames e diagnósticos para o Cloudinary.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "examesArquivos": {
+                      "type": "array",
+                      "items": { "type": "string", "format": "binary" },
+                      "description": "Arquivos de exames (PDF, imagem, etc)"
+                    },
+                    "diagnosticosArquivos": {
+                      "type": "array",
+                      "items": { "type": "string", "format": "binary" },
+                      "description": "Arquivos de diagnósticos (PDF, imagem, etc)"
+                    },
+                    "outros_campos": {
+                      "type": "string",
+                      "description": "Demais campos do formulário de pré-cadastro"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Pré-cadastro salvo com sucesso",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": { "type": "boolean" }
+                    }
+                  },
+                  "example": { "success": true }
+                }
+              }
+            },
+            "400": { "description": "Erro ao processar formulário" },
+            "500": { "description": "Erro ao salvar dados" }
+          }
+        }
+      },
       "get": {
         "summary": "Lista todos os pacientes",
         "responses": {
