@@ -41,13 +41,15 @@ module.exports = async function handler(req, res) {
   }
   if (req.method === "POST") {
     const dados = req.body;
-  // Converte strings vazias para null nos campos sensíveis
-  if (dados.data_nascimento === "") dados.data_nascimento = null;
-  if (dados.peso_atual === "") dados.peso_atual = null;
-  if (dados.altura === "") dados.altura = null;
-  // Converte arrays para string JSON nos campos JSONB
-  if (Array.isArray(dados.exames_arquivos)) dados.exames_arquivos = JSON.stringify(dados.exames_arquivos);
-  if (Array.isArray(dados.diagnosticos_arquivos)) dados.diagnosticos_arquivos = JSON.stringify(dados.diagnosticos_arquivos);
+    // Converte strings vazias para null nos campos sensíveis
+    if (dados.data_nascimento === "") dados.data_nascimento = null;
+    if (dados.peso_atual === "") dados.peso_atual = null;
+    if (dados.altura === "") dados.altura = null;
+    // Converte arrays para string JSON nos campos JSONB
+    if (Array.isArray(dados.exames_arquivos))
+      dados.exames_arquivos = JSON.stringify(dados.exames_arquivos);
+    if (Array.isArray(dados.diagnosticos_arquivos))
+      dados.diagnosticos_arquivos = JSON.stringify(dados.diagnosticos_arquivos);
     console.log(
       "[DEBUG] Dados recebidos no POST /api/pacientes:",
       JSON.stringify(dados)
