@@ -1,19 +1,4 @@
-    "/api/pacientes/{id}": {
-      "get": {
-        "summary": "Busca paciente por ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" },
-            "description": "ID do paciente"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Paciente encontrado",
-            "content": {
+    {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/Paciente" }
               }
@@ -70,7 +55,6 @@
         }
       }
     },
-{
   "openapi": "3.0.0",
   "info": {
     "title": "SlimShape API",
@@ -337,6 +321,78 @@
         },
         "responses": {
           "204": { "description": "Paciente removido" }
+        }
+      }
+    },
+    "/api/pacientes/{id}": {
+      "get": {
+        "summary": "Busca paciente por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID do paciente"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paciente encontrado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Paciente" }
+              }
+            }
+          },
+          "404": { "description": "Paciente não encontrado" }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um paciente por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID do paciente"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Paciente" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Paciente atualizado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Paciente" }
+              }
+            }
+          },
+          "404": { "description": "Paciente não encontrado" }
+        }
+      },
+      "delete": {
+        "summary": "Remove um paciente por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID do paciente"
+          }
+        ],
+        "responses": {
+          "204": { "description": "Paciente removido" },
+          "404": { "description": "Paciente não encontrado" }
         }
       }
     },
