@@ -6,6 +6,17 @@ const pool = new Pool({
 });
 
 module.exports = async function handler(req, res) {
+  // CORS para localhost:3000 e produção
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  if (req.method === "OPTIONS") {
+    res.status(204).end();
+    return;
+  }
+
   if (req.method !== "POST") {
     res.status(405).json({ error: "Método não permitido" });
     return;
