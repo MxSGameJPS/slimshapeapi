@@ -3,8 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 
 const ASAAS_API_URL = "https://www.asaas.com/api/v3";
-const ASAAS_TOKEN =
-  "$aact_prod_000MzkwODA2MWY2OGM3MWRlMDU2NWM3MzJlNzZmNGZhZGY6OmJlMjM0NTU2LTBhYTMtNDQ0Yi1hZDViLTY4NjM0YzYwZTdhZTo6JGFhY2hfZTFmYTY1NTgtYTBlMS00MTEyLTg3MDQtNDJjYTkyZmYzNTEw";
+const ASAAS_TOKEN = process.env.ASAAS_TOKEN;
 
 // Criar cobrança
 router.post("/cobranca", async (req, res) => {
