@@ -9,6 +9,31 @@ const allowedOrigins = [
   "https://slimshapeapi.vercel.app",
 ];
 
+// Função para buscar ou criar customer na Asaas
+async function getOrCreateCustomer(cliente) {
+  // cliente: { nome, email, cpfCnpj, telefone }
+  const params = new URLSearchParams({ cpfCnpj: cliente.cpfCnpj });
+  const headers = { access_token: ASAAS_TOKEN };
+  const busca = await axios.get(`${ASAAS_API_URL}/customers?${params}`, {
+    headers,
+  });
+  if (busca.data && busca.data.data && busca.data.data.length > 0) {
+    return busca.data.data[0].id;
+  }
+  // Se não existe, cria
+  const novo = await axios.post(
+    `${ASAAS_API_URL}/customers`,
+    {
+      name: cliente.nome,
+      email: cliente.email,
+      cpfCnpj: cliente.cpfCnpj,
+      phone: cliente.telefone,
+    },
+    { headers: { ...headers, "Content-Type": "application/json" } }
+  );
+  return novo.data.id;
+}
+
 module.exports = async function handler(req, res) {
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
@@ -24,15 +49,30 @@ module.exports = async function handler(req, res) {
   }
 
   if (req.method === "POST") {
-    // Espera receber no body: customer, billingType, value, dueDate, etc.
     try {
-      const response = await axios.post(`${ASAAS_API_URL}/checkout`, req.body, {
+      // Espera receber no body: { nome, email, cpfCnpj, telefone, ...dadosDoCheckout }
+      const { nome, email, cpfCnpj, telefone, ...checkoutData } = req.body;
+      if (!nome || !email || !cpfCnpj || !telefone) {
+        return res.status(400).json({ error: "Dados do cliente incompletos" });
+      }
+      // Busca ou cria o customer na Asaas
+      const customerId = await getOrCreateCustomer({
+        nome,
+        email,
+        cpfCnpj,
+        telefone,
+      });
+      // Monta o payload do checkout
+      const payload = {
+        customer: customerId,
+        ...checkoutData,
+      };
+      const response = await axios.post(`${ASAAS_API_URL}/checkout`, payload, {
         headers: {
           "Content-Type": "application/json",
           access_token: ASAAS_TOKEN,
         },
       });
-      // Retorna a URL do checkout para o frontend
       res
         .status(201)
         .json({
