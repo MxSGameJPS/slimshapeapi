@@ -50,8 +50,8 @@ module.exports = async function handler(req, res) {
 
   if (req.method === "POST") {
     try {
-      // Espera receber no body: { nome, email, cpfCnpj, telefone, ...dadosDoCheckout }
-      const { nome, email, cpfCnpj, telefone, ...checkoutData } = req.body;
+      // Espera receber no body: { nome, email, cpfCnpj, telefone, ...dadosDoPagamento }
+      const { nome, email, cpfCnpj, telefone, ...paymentData } = req.body;
       if (!nome || !email || !cpfCnpj || !telefone) {
         return res.status(400).json({ error: "Dados do cliente incompletos" });
       }
@@ -62,23 +62,25 @@ module.exports = async function handler(req, res) {
         cpfCnpj,
         telefone,
       });
-      // Monta o payload do checkout
+      // Monta o payload do pagamento
       const payload = {
         customer: customerId,
-        ...checkoutData,
+        ...paymentData,
       };
-      const response = await axios.post(`${ASAAS_API_URL}/checkout`, payload, {
+      const response = await axios.post(`${ASAAS_API_URL}/payments`, payload, {
         headers: {
           "Content-Type": "application/json",
           access_token: ASAAS_TOKEN,
         },
       });
-      res
-        .status(201)
-        .json({
-          url: response.data?.invoiceUrl || response.data?.url,
-          ...response.data,
-        });
+      // Retorna a URL do boleto, pix ou invoice para o frontend
+      res.status(201).json({
+        url:
+          response.data?.invoiceUrl ||
+          response.data?.bankSlipUrl ||
+          response.data?.transactionReceiptUrl,
+        ...response.data,
+      });
     } catch (error) {
       res
         .status(error.response?.status || 500)
