@@ -5,6 +5,28 @@ const axios = require("axios");
 const ASAAS_API_URL = "https://www.asaas.com/api/v3";
 const ASAAS_TOKEN = process.env.ASAAS_TOKEN;
 
+// Middleware para liberar CORS para localhost e produção
+router.use((req, res, next) => {
+  const allowedOrigins = [
+    "http://localhost:3000",
+    "https://slimshape-three.vercel.app",
+    "https://slimshapeapi.vercel.app",
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  } else {
+    res.setHeader("Access-Control-Allow-Origin", allowedOrigins[0]);
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    return res.status(204).end();
+  }
+  next();
+});
+
 // Criar cobrança
 router.post("/cobranca", async (req, res) => {
   try {
