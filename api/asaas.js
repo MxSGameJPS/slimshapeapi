@@ -5,8 +5,8 @@ const axios = require("axios");
 const ASAAS_API_URL = "https://www.asaas.com/api/v3";
 const ASAAS_TOKEN = process.env.ASAAS_TOKEN;
 
-// Middleware para liberar CORS para localhost e produção
-router.use((req, res, next) => {
+// Middleware CORS para endpoints serverless (garante CORS em todas as rotas)
+function corsHandler(req, res) {
   const allowedOrigins = [
     "http://localhost:3000",
     "https://slimshape-three.vercel.app",
@@ -22,9 +22,15 @@ router.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   if (req.method === "OPTIONS") {
-    return res.status(204).end();
+    res.status(204).end();
+    return true;
   }
-  next();
+  return false;
+}
+
+// Aplica CORS em cada rota
+router.use((req, res, next) => {
+  if (!corsHandler(req, res)) next();
 });
 
 // Criar cobrança
