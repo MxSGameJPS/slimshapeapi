@@ -76,8 +76,100 @@
                 "schema": { "$ref": "#/components/schemas/Plano" }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/asaas/cobranca": {
+      "post": {
+        "summary": "Cria uma cobrança na Asaas",
+        "description": "Cria uma cobrança (boleto, pix, cartão, etc) usando a API da Asaas.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customer": { "type": "string", "description": "ID do cliente na Asaas" },
+                  "billingType": { "type": "string", "description": "Tipo de cobrança (BOLETO, PIX, CREDIT_CARD, etc)" },
+                  "value": { "type": "number", "description": "Valor da cobrança" },
+                  "dueDate": { "type": "string", "format": "date", "description": "Data de vencimento" }
+                },
+                "required": ["customer", "billingType", "value", "dueDate"]
+              },
+              "examples": {
+                "boleto": {
+                  "value": {
+                    "customer": "cus_123456789",
+                    "billingType": "BOLETO",
+                    "value": 100.5,
+                    "dueDate": "2025-09-20"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cobrança criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
           },
-          "400": { "description": "Nome e descrição são obrigatórios." }
+          "400": { "description": "Dados inválidos" }
+        }
+      }
+    },
+    "/api/asaas/cobranca/{id}": {
+      "get": {
+        "summary": "Consulta uma cobrança na Asaas",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "ID da cobrança na Asaas"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados da cobrança",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          },
+          "404": { "description": "Cobrança não encontrada" }
+        }
+      }
+    },
+    "/api/asaas/cobrancas/{customerId}": {
+      "get": {
+        "summary": "Lista cobranças de um cliente na Asaas",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "ID do cliente na Asaas"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de cobranças",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
         }
       }
     },
