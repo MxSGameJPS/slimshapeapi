@@ -41,7 +41,7 @@ let planos = [
       "O início da jornada, ideal para quem quer experimentar e dar o primeiro passo.",
     precos: [
       { duracao: "30 Dias", preco: "R$ 865,67" },
-      { duracao: "60 Dias", preco: "R$ 2.020,83" },
+      { duracao: "90 Dias", preco: "R$ 2.020,83" },
       { duracao: "180 Dias", preco: "R$ 3.689,17" },
     ],
   },
@@ -52,7 +52,7 @@ let planos = [
       "Evolução consistente, resultados visíveis e acompanhamento estruturado.",
     precos: [
       { duracao: "30 Dias", preco: "R$ 865,67" },
-      { duracao: "60 Dias", preco: "R$ 2.020,83" },
+      { duracao: "90 Dias", preco: "R$ 2.020,83" },
       { duracao: "180 Dias", preco: "R$ 3.689,17" },
     ],
   },
@@ -63,7 +63,7 @@ let planos = [
       "Transformação completa, duradoura e definitiva no estilo de vida.",
     precos: [
       { duracao: "30 Dias", preco: "R$ 865,67" },
-      { duracao: "60 Dias", preco: "R$ 2.020,83" },
+      { duracao: "90 Dias", preco: "R$ 2.020,83" },
       { duracao: "180 Dias", preco: "R$ 3.689,17" },
     ],
   },
