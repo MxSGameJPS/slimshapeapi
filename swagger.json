@@ -6,57 +6,82 @@
     "description": "Documentação da API SlimShape"
   },
   "paths": {
-    "/api/pacientes": {
-      "/api/pre-cadastro": {
-        "post": {
-          "summary": "Envia dados de pré-cadastro com upload de arquivos",
-          "description": "Recebe dados do pré-cadastro e faz upload de exames e diagnósticos para o Cloudinary.",
-          "requestBody": {
-            "required": true,
+    "/api/planos": {
+      "get": {
+        "summary": "Lista todos os planos",
+        "responses": {
+          "200": {
+            "description": "Lista de planos disponíveis",
             "content": {
-              "multipart/form-data": {
+              "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "examesArquivos": {
-                      "type": "array",
-                      "items": { "type": "string", "format": "binary" },
-                      "description": "Arquivos de exames (PDF, imagem, etc)"
-                    },
-                    "diagnosticosArquivos": {
-                      "type": "array",
-                      "items": { "type": "string", "format": "binary" },
-                      "description": "Arquivos de diagnósticos (PDF, imagem, etc)"
-                    },
-                    "outros_campos": {
-                      "type": "string",
-                      "description": "Demais campos do formulário de pré-cadastro"
-                    }
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Plano" }
+                },
+                "examples": {
+                  "exemplo": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "nome": "Plano Start Tirze (1 mês)",
+                        "descricao": "O início da jornada, ideal para quem quer experimentar e dar o primeiro passo.",
+                        "precos": [
+                          { "duracao": "30 Dias", "preco": "R$ 1.453,67" },
+                          { "duracao": "90 Dias", "preco": "R$ 2.877,67" },
+                          { "duracao": "180 Dias", "preco": "R$ 8.455,00" }
+                        ]
+                      },
+                      {
+                        "id": 4,
+                        "nome": "Plano Start Sema (1 mês)",
+                        "descricao": "O início da jornada, ideal para quem quer experimentar e dar o primeiro passo.",
+                        "precos": [
+                          { "duracao": "30 Dias", "preco": "R$ 865,67" },
+                          { "duracao": "60 Dias", "preco": "R$ 2.020,83" },
+                          { "duracao": "180 Dias", "preco": "R$ 3.689,17" }
+                        ]
+                      }
+                    ]
                   }
                 }
               }
             }
-          },
-          "responses": {
-            "200": {
-              "description": "Pré-cadastro salvo com sucesso",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "success": { "type": "boolean" }
-                    }
-                  },
-                  "example": { "success": true }
-                }
-              }
-            },
-            "400": { "description": "Erro ao processar formulário" },
-            "500": { "description": "Erro ao salvar dados" }
           }
         }
       },
+      "post": {
+        "summary": "Cria um novo plano",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Plano" },
+              "examples": {
+                "exemplo": {
+                  "value": {
+                    "nome": "Plano Start Tirze (1 mês)",
+                    "descricao": "O início da jornada, ideal para quem quer experimentar e dar o primeiro passo.",
+                    "precos": [{ "duracao": "30 Dias", "preco": "R$ 1.453,67" }]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Plano criado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Plano" }
+              }
+            }
+          },
+          "400": { "description": "Nome e descrição são obrigatórios." }
+        }
+      }
+    },
+    "/api/pacientes": {
       "get": {
         "summary": "Lista todos os pacientes",
         "responses": {
@@ -219,6 +244,64 @@
             }
           }
         }
+      }
+    },
+    "/api/pre-cadastro": {
+      "post": {
+        "summary": "Envia dados de pré-cadastro com upload de arquivos",
+        "description": "Recebe arquivos (exames e diagnósticos) e retorna as URLs dos arquivos enviados para o Cloudinary.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "examesArquivos": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" },
+                    "description": "Arquivos de exames (PDF, imagem, etc)"
+                  },
+                  "diagnosticosArquivos": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" },
+                    "description": "Arquivos de diagnósticos (PDF, imagem, etc)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URLs dos arquivos enviados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "examesUrls": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "example": ["https://cloudinary.com/exame1.pdf"]
+                    },
+                    "diagUrls": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "example": ["https://cloudinary.com/diag1.pdf"]
+                    }
+                  }
+                },
+                "example": {
+                  "examesUrls": ["https://cloudinary.com/exame1.pdf"],
+                  "diagUrls": ["https://cloudinary.com/diag1.pdf"]
+                }
+              }
+            }
+          },
+          "400": { "description": "Erro ao processar formulário" },
+          "500": { "description": "Erro ao salvar dados" }
+        }
       },
       "put": {
         "summary": "Atualiza um paciente",
@@ -257,6 +340,78 @@
         },
         "responses": {
           "204": { "description": "Paciente removido" }
+        }
+      }
+    },
+    "/api/pacientes/{id}": {
+      "get": {
+        "summary": "Busca paciente por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID do paciente"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paciente encontrado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Paciente" }
+              }
+            }
+          },
+          "404": { "description": "Paciente não encontrado" }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um paciente por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID do paciente"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Paciente" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Paciente atualizado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Paciente" }
+              }
+            }
+          },
+          "404": { "description": "Paciente não encontrado" }
+        }
+      },
+      "delete": {
+        "summary": "Remove um paciente por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID do paciente"
+          }
+        ],
+        "responses": {
+          "204": { "description": "Paciente removido" },
+          "404": { "description": "Paciente não encontrado" }
         }
       }
     },
@@ -347,10 +502,94 @@
           "204": { "description": "Médico removido" }
         }
       }
+    },
+    "/api/admin": {
+      "post": {
+        "summary": "Login de administrador",
+        "description": "Realiza o login do administrador e retorna um token de autenticação.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "usuario": { "type": "string", "example": "admin" },
+                  "senha": { "type": "string", "example": "123456" }
+                },
+                "required": ["usuario", "senha"]
+              },
+              "examples": {
+                "exemplo": {
+                  "value": {
+                    "usuario": "admin",
+                    "senha": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "admin": { "$ref": "#/components/schemas/Admin" }
+                  }
+                },
+                "examples": {
+                  "exemplo": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                      "admin": {
+                        "id": 1,
+                        "usuario": "admin",
+                        "nome": "Administrador"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Credenciais inválidas"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "Plano": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "nome": { "type": "string", "example": "Plano Total" },
+          "descricao": {
+            "type": "string",
+            "example": "Avaliação Médica. Entrega de Medicamentos na sua porta. Suporte clínico via WhatsApp. Acompanhamento nutricional."
+          }
+        },
+        "precos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "duracao": { "type": "string", "example": "30 Dias" },
+              "preco": { "type": "string", "example": "R$ 1.453,67" }
+            }
+          }
+        }
+      },
       "Paciente": {
         "type": "object",
         "properties": {
@@ -484,6 +723,11 @@
             "type": "string",
             "format": "date-time",
             "example": "2025-09-10T12:00:00Z"
+          },
+          "plano": {
+            "type": "string",
+            "example": "Plano Total",
+            "description": "Nome do plano escolhido pelo paciente"
           }
         }
       },
@@ -493,6 +737,14 @@
           "id": { "type": "integer", "example": 1 },
           "nome": { "type": "string", "example": "Dr. João" },
           "crm": { "type": "string", "example": "123456" }
+        }
+      },
+      "Admin": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "usuario": { "type": "string", "example": "admin" },
+          "nome": { "type": "string", "example": "Administrador" }
         }
       }
     }

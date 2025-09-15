@@ -3,14 +3,69 @@
 let planos = [
   {
     id: 1,
-    nome: "Plano Total",
+    nome: "Plano Start Tirze (1 mês)",
     descricao:
-      "Avaliação Médica. Entrega de Medicamentos na sua porta. Suporte clínico via WhatsApp. Acompanhamento nutricional.",
+      "O início da jornada, ideal para quem quer experimentar e dar o primeiro passo.",
+    precos: [
+      { duracao: "30 Dias", preco: "R$ 1.453,67" },
+      { duracao: "90 Dias", preco: "R$ 2.877,67" },
+      { duracao: "180 Dias", preco: "R$ 8.455,00" },
+    ],
   },
   {
     id: 2,
-    nome: "Plano Básico",
-    descricao: "Avaliação Médica e Entrega de Medicamento",
+    nome: "Plano Premium Tirze (3 meses)",
+    descricao:
+      "Evolução consistente, resultados visíveis e acompanhamento estruturado.",
+    precos: [
+      { duracao: "30 Dias", preco: "R$ 1.453,67" },
+      { duracao: "90 Dias", preco: "R$ 2.877,67" },
+      { duracao: "180 Dias", preco: "R$ 8.455,00" },
+    ],
+  },
+  {
+    id: 3,
+    nome: "Plano Excellence Tirze (6 meses)",
+    descricao:
+      "Transformação completa, duradoura e definitiva no estilo de vida.",
+    precos: [
+      { duracao: "30 Dias", preco: "R$ 1.453,67" },
+      { duracao: "90 Dias", preco: "R$ 2.877,67" },
+      { duracao: "180 Dias", preco: "R$ 8.455,00" },
+    ],
+  },
+  {
+    id: 4,
+    nome: "Plano Start Sema (1 mês)",
+    descricao:
+      "O início da jornada, ideal para quem quer experimentar e dar o primeiro passo.",
+    precos: [
+      { duracao: "30 Dias", preco: "R$ 865,67" },
+      { duracao: "60 Dias", preco: "R$ 2.020,83" },
+      { duracao: "180 Dias", preco: "R$ 3.689,17" },
+    ],
+  },
+  {
+    id: 5,
+    nome: "Plano Premium Sema (3 meses)",
+    descricao:
+      "Evolução consistente, resultados visíveis e acompanhamento estruturado.",
+    precos: [
+      { duracao: "30 Dias", preco: "R$ 865,67" },
+      { duracao: "60 Dias", preco: "R$ 2.020,83" },
+      { duracao: "180 Dias", preco: "R$ 3.689,17" },
+    ],
+  },
+  {
+    id: 6,
+    nome: "Plano Excellence Sema (6 meses)",
+    descricao:
+      "Transformação completa, duradoura e definitiva no estilo de vida.",
+    precos: [
+      { duracao: "30 Dias", preco: "R$ 865,67" },
+      { duracao: "60 Dias", preco: "R$ 2.020,83" },
+      { duracao: "180 Dias", preco: "R$ 3.689,17" },
+    ],
   },
 ];
 
