@@ -6,7 +6,7 @@ const ASAAS_TOKEN = process.env.ASAAS_TOKEN;
 const allowedOrigins = [
   "http://localhost:3000",
   "https://slimshape-three.vercel.app",
-  "https://slimshapeapi.vercel.app"
+  "https://slimshapeapi.vercel.app",
 ];
 
 module.exports = async function handler(req, res) {
@@ -33,7 +33,9 @@ module.exports = async function handler(req, res) {
       });
       res.status(201).json(response.data);
     } catch (error) {
-      res.status(error.response?.status || 500).json({ error: error.response?.data || error.message });
+      res
+        .status(error.response?.status || 500)
+        .json({ error: error.response?.data || error.message });
     }
     return;
   }
