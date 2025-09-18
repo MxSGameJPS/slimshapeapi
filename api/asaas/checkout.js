@@ -62,21 +62,23 @@ module.exports = async function handler(req, res) {
         cpfCnpj,
         telefone,
       });
-      // Monta o payload do checkout híbrido
+      // Monta o payload do pagamento
       const payload = {
         customer: customerId,
         ...paymentData,
       };
-      // Cria o checkout híbrido na Asaas
-      const response = await axios.post(`${ASAAS_API_URL}/checkout`, payload, {
+      const response = await axios.post(`${ASAAS_API_URL}/payments`, payload, {
         headers: {
           "Content-Type": "application/json",
           access_token: ASAAS_TOKEN,
         },
       });
-      // Retorna a URL do checkout para o frontend
+      // Retorna a URL do boleto, pix ou invoice para o frontend
       res.status(201).json({
-        url: response.data?.checkoutUrl,
+        url:
+          response.data?.invoiceUrl ||
+          response.data?.bankSlipUrl ||
+          response.data?.transactionReceiptUrl,
         ...response.data,
       });
     } catch (error) {
