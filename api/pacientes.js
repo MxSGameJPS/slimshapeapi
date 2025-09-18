@@ -54,6 +54,8 @@ module.exports = async function handler(req, res) {
     if (dados.data_nascimento === "") dados.data_nascimento = null;
     if (dados.peso_atual === "") dados.peso_atual = null;
     if (dados.altura === "") dados.altura = null;
+    if (dados.peso_minimo === "") dados.peso_minimo = null;
+    if (dados.peso_maximo === "") dados.peso_maximo = null;
     // Converte arrays para string JSON nos campos JSONB
     if (Array.isArray(dados.exames_arquivos))
       dados.exames_arquivos = JSON.stringify(dados.exames_arquivos);
