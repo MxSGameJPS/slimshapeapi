@@ -6,22 +6,22 @@ let planos = [
     nome: "Plano Start Tirze (1 mês)",
     descricao:
       "O início da jornada, ideal para quem quer experimentar e dar o primeiro passo.",
-    precos: [{ duracao: "30 Dias", preco: "R$ 1.453,67" }],
+    precos: [{ duracao: "30 Dias", preco: "R$ 1.476,67" }],
   },
   {
     id: 2,
-    nome: "Plano Premium Tirze (3 meses)",
+    nome: "Plano Premium Tirze (2 meses)",
     descricao:
       "Evolução consistente, resultados visíveis e acompanhamento estruturado.",
-    precos: [{ duracao: "90 Dias", preco: "R$ 2.877,67" }],
+    precos: [{ duracao: "60 Dias", preco: "R$ 2.916,50" }],
   },
   {
     id: 3,
-    nome: "Plano Excellence Tirze (6 meses)",
+    nome: "Plano Excellence Tirze (3 meses)",
     descricao:
       "Transformação completa, duradoura e definitiva no estilo de vida.",
     precos: [
-      { duracao: "180 Dias", preco: "R$ 8.455,00" },
+      { duracao: "120 Dias", preco: "R$ 5.823,81" },
     ],
   },
   {
@@ -30,25 +30,25 @@ let planos = [
     descricao:
       "O início da jornada, ideal para quem quer experimentar e dar o primeiro passo.",
     precos: [
-      { duracao: "30 Dias", preco: "R$ 865,67" },
+      { duracao: "30 Dias", preco: "R$ 877,08" },
     ],
   },
   {
     id: 5,
-    nome: "Plano Premium Sema (3 meses)",
+    nome: "Plano Premium Sema (2 meses)",
     descricao:
       "Evolução consistente, resultados visíveis e acompanhamento estruturado.",
     precos: [
-      { duracao: "90 Dias", preco: "R$ 2.020,83" },
+      { duracao: "60 Dias", preco: "R$ 1.715,32" },
     ],
   },
   {
     id: 6,
-    nome: "Plano Excellence Sema (6 meses)",
+    nome: "Plano Excellence Sema (3 meses)",
     descricao:
       "Transformação completa, duradoura e definitiva no estilo de vida.",
     precos: [
-      { duracao: "180 Dias", preco: "R$ 3.689,17" },
+      { duracao: "120 Dias", preco: "R$ 2.466,67" },
     ],
   },
 ];
