@@ -13,7 +13,7 @@ let planos = [
     nome: "Plano Premium Tirze (2 meses)",
     descricao:
       "Evolução consistente, resultados visíveis e acompanhamento estruturado.",
-    precos: [{ duracao: "60 Dias", preco: "R$ 2.916,50" }],
+    precos: [{ duracao: "60 Dias", preco: "R$ 2.915,50" }],
   },
   {
     id: 3,
