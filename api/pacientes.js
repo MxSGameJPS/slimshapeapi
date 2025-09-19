@@ -14,7 +14,7 @@ module.exports = async function handler(req, res) {
   const allowedOrigins = [
     "http://localhost:3000",
     "https://slimshape-three.vercel.app",
-    "https://www.slimshapedigital.com.br/",
+    "https://www.slimshapedigital.com.br",
   ];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {

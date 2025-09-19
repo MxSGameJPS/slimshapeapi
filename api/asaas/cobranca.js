@@ -7,7 +7,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://slimshape-three.vercel.app",
   "https://slimshapeapi.vercel.app",
-  "https://www.slimshapedigital.com.br/",
+  "https://www.slimshapedigital.com.br",
 ];
 
 module.exports = async function handler(req, res) {
