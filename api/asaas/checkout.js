@@ -7,6 +7,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://slimshape-three.vercel.app",
   "https://slimshapeapi.vercel.app",
+  "https://www.slimshapedigital.com.br/",
 ];
 
 // Função para buscar ou criar customer na Asaas

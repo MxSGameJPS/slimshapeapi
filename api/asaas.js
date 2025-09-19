@@ -11,6 +11,7 @@ function setCorsHeaders(res, origin) {
     "http://localhost:3000",
     "https://slimshape-three.vercel.app",
     "https://slimshapeapi.vercel.app",
+    "https://www.slimshapedigital.com.br/",
   ];
   if (allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
